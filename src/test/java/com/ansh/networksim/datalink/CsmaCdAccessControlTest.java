@@ -40,9 +40,17 @@ class CsmaCdAccessControlTest {
         }
 
         String printed = output.toString(StandardCharsets.UTF_8);
+        assertTrue(printed.contains("Tick 0: S1 senses the medium as idle and starts transmitting."), printed);
+        assertTrue(printed.contains("Collision trace on shared medium:"), printed);
+        assertTrue(printed.contains("Tick 0: S1 sent payload bit 0, S2 sent payload bit 0 -> collision on medium"), printed);
+        assertTrue(printed.contains("S1 detected the collision and is sending a jam signal."), printed);
+        assertTrue(printed.contains("jam signal bit 1/8 = 1"), printed);
         assertTrue(printed.contains("Collision detected for 2 simultaneous transmissions."), printed);
+        assertTrue(printed.contains("S1 selected backoff slot 1 from range [0, 1]."), printed);
+        assertTrue(printed.contains("S2 selected backoff slot 0 from range [0, 1]."), printed);
         assertTrue(printed.contains("Backoff round 1:"), printed);
         assertTrue(printed.contains("Backoff round 2:"), printed);
-        assertTrue(printed.contains("S2 must wait for the next backoff round."), printed);
+        assertTrue(printed.contains("S2 successfully transmitted after backoff."), printed);
+        assertTrue(printed.contains("S1 successfully transmitted after backoff."), printed);
     }
 }

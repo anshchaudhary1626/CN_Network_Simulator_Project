@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Test;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class SharedMediumTest {
@@ -24,6 +25,9 @@ class SharedMediumTest {
 
         SharedMedium medium = new SharedMedium();
         assertFalse(medium.hasCollision(List.of(request)));
+        assertTrue(medium.isIdle() == false);
+        assertEquals(1, medium.getActiveRequests().size());
+        assertEquals(0, medium.getCurrentTick());
     }
 
     @Test
@@ -46,5 +50,41 @@ class SharedMediumTest {
 
         SharedMedium medium = new SharedMedium();
         assertTrue(medium.hasCollision(List.of(request1, request2)));
+        assertEquals(2, medium.getActiveRequests().size());
+    }
+
+    @Test
+    void clearResetsBusyState() {
+        EndDevice sender = new EndDevice(1, "S1");
+        EndDevice receiver = new EndDevice(2, "S2");
+        Connection connection = new Connection(sender, receiver);
+        TransmissionRequest request = new TransmissionRequest(
+                sender,
+                connection,
+                Frame.createDataFrame("S1", "S2", 0, "payload")
+        );
+
+        SharedMedium medium = new SharedMedium("lab medium");
+        medium.beginTransmissionRound(List.of(request));
+
+        assertEquals("lab medium", medium.getMediumName());
+        assertFalse(medium.isIdle());
+
+        medium.clear();
+
+        assertTrue(medium.isIdle());
+        assertTrue(medium.getActiveRequests().isEmpty());
+        assertEquals(0, medium.getCurrentTick());
+    }
+
+    @Test
+    void mediumClockCanAdvanceIndependentlyOfOccupancy() {
+        SharedMedium medium = new SharedMedium();
+
+        medium.advanceTick();
+        medium.advanceTicks(4);
+
+        assertEquals(5, medium.getCurrentTick());
+        assertTrue(medium.isIdle());
     }
 }

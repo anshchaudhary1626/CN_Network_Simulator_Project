@@ -30,7 +30,17 @@ class GoBackNProtocolTest {
         }
 
         String printed = output.toString(StandardCharsets.UTF_8);
-        assertTrue(printed.contains("timed out and is retransmitting from sequence number 2."), printed);
+        assertTrue(printed.contains("Payload bits: 0101000000110000"), printed);
+        assertTrue(printed.contains("Tick 0: S1 -> S2 payload bit 1/16 = 0"), printed);
+        assertTrue(printed.contains("Window send range: [0, 2]"), printed);
+        assertTrue(printed.contains("Timer started for frame 0 at tick 0 with timeout duration "), printed);
+        assertTrue(printed.contains("and timeout threshold tick "), printed);
+        assertTrue(printed.contains("prepared ACK frame seq=0 for S1."), printed);
+        assertTrue(printed.contains("Payload bits: <none>"), printed);
+        assertTrue(printed.contains("ACK for frame 0 arrived at tick "), printed);
+        assertTrue(printed.contains("received cumulative ACKs up to sequence number 1 and will go back to 2 after timeout at tick "), printed);
+        assertTrue(printed.contains("detected an error in frame with sequence number 2."), printed);
+        assertTrue(printed.contains("Total frames sent: 6"), printed);
         assertTrue(printed.contains("Total retransmissions: 1"), printed);
         assertTrue(printed.contains("Transfer completed successfully."), printed);
     }

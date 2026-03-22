@@ -3,6 +3,7 @@ package com.ansh.networksim.model;
 
 import com.ansh.networksim.datalink.Frame;
 import com.ansh.networksim.datalink.FrameType;
+import com.ansh.networksim.simulation.PayloadUtil;
 
 public class EndDevice extends Device{
     public EndDevice(int id, String name) {
@@ -15,7 +16,8 @@ public class EndDevice extends Device{
         }
 
         DataPacket packet = new DataPacket(getName(), destination, message);
-        System.out.println(getName() + " is sending a physical-layer packet to " + destination + " with payload: " + message);
+        System.out.println(getName() + " is sending a physical-layer packet to " + destination
+                + " with payload: " + PayloadUtil.display(message));
 
         getConnections().get(0).transmit(this, packet);
     }
@@ -23,7 +25,7 @@ public class EndDevice extends Device{
     @Override
     public void receive(DataPacket packet, Connection fromConnection){
         if(getName().equals(packet.getDestination())){
-            System.out.println(getName() + " received the physical-layer message: " + packet.getPayload());
+            System.out.println(getName() + " received the physical-layer message: " + PayloadUtil.display(packet.getPayload()));
         }
         else {
             System.out.println(getName() + " received a physical-layer packet not meant for it and ignored it.");
@@ -36,7 +38,8 @@ public class EndDevice extends Device{
         }
 
         Frame frame = Frame.createDataFrame(getName(), destinationMac, 0, message);
-        System.out.println(getName() + " is sending a data-link frame to " + destinationMac + " with payload: " + message);
+        System.out.println(getName() + " is sending a data-link frame to " + destinationMac
+                + " with payload: " + PayloadUtil.display(message));
 
         getConnections().get(0).transmitFrame(this, frame);
     }
@@ -49,7 +52,7 @@ public class EndDevice extends Device{
         }
 
         if (getName().equals(frame.getDestinationMac()) || Frame.BROADCAST_MAC.equals(frame.getDestinationMac())) {
-            System.out.println(getName() + " received the frame payload: " + frame.getPayload());
+            System.out.println(getName() + " received the frame payload: " + PayloadUtil.display(frame.getPayload()));
         } else {
             System.out.println(getName() + " received a frame not meant for it and ignored it.");
         }
