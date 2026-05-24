@@ -11,8 +11,12 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+/**
+ * Verifies the bridge's two-port limit and MAC-learning output.
+ */
 class BridgeTest {
 
+    // Verify that a bridge rejects a third attached link.
     @Test
     void bridgeRejectsMoreThanTwoPorts() {
         Bridge bridge = new Bridge(10, "B1");
@@ -31,6 +35,7 @@ class BridgeTest {
         assertEquals("B1 only supports 2 ports ", exception.getMessage());
     }
 
+    // Verify that bridge learning appears in the printed MAC table.
     @Test
     void bridgePrintsLearnedMacTableAfterTraffic() {
         EndDevice d1 = new EndDevice(1, "D1");

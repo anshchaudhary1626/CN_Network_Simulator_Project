@@ -10,8 +10,12 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+/**
+ * Unit tests for shared-medium occupancy, clock movement, and collision state.
+ */
 class SharedMediumTest {
 
+    // Verify a single request does not count as a collision.
     @Test
     void hasCollisionReturnsFalseForSingleRequest() {
         EndDevice sender = new EndDevice(1, "S1");
@@ -30,6 +34,7 @@ class SharedMediumTest {
         assertEquals(0, medium.getCurrentTick());
     }
 
+    // Verify multiple active requests are reported as a collision.
     @Test
     void hasCollisionReturnsTrueForMultipleRequests() {
         EndDevice s1 = new EndDevice(1, "S1");
@@ -53,6 +58,7 @@ class SharedMediumTest {
         assertEquals(2, medium.getActiveRequests().size());
     }
 
+    // Verify the medium can be reset after use.
     @Test
     void clearResetsBusyState() {
         EndDevice sender = new EndDevice(1, "S1");
@@ -77,6 +83,7 @@ class SharedMediumTest {
         assertEquals(0, medium.getCurrentTick());
     }
 
+    // Verify the simulated clock can move forward independently.
     @Test
     void mediumClockCanAdvanceIndependentlyOfOccupancy() {
         SharedMedium medium = new SharedMedium();

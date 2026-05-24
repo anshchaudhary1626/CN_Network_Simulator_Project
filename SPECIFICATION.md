@@ -217,7 +217,7 @@ Connection{device1=A, device2=B}
 
 #### `src/main/java/com/ansh/networksim/datalink/ChecksumUtil.java`
 - Role:
-  - Computes a simple modulo-256 checksum over payload characters.
+  - Computes a 16-bit one's-complement checksum over the UTF-8 payload bytes.
 
 #### `src/main/java/com/ansh/networksim/datalink/Frame.java`
 - Role:
@@ -227,7 +227,7 @@ Connection{device1=A, device2=B}
   - destination MAC
   - sequence number
   - payload
-  - checksum
+  - 16-bit checksum
   - frame type
 - Behavior:
   - creates data and ACK frames

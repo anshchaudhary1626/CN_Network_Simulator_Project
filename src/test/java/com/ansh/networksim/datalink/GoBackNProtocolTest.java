@@ -11,8 +11,12 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+/**
+ * Confirms the Go-Back-N demo shows timeout, ACK, and recovery after corruption.
+ */
 class GoBackNProtocolTest {
 
+    // Verify the printed protocol trace shows corruption detection and recovery.
     @Test
     void transmitReportsSuccessfulRecoveryAfterInjectedError() {
         GoBackNProtocol protocol = new GoBackNProtocol(3);

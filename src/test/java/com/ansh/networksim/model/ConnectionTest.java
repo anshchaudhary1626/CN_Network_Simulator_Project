@@ -5,8 +5,12 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
+/**
+ * Checks the basic endpoint lookup behavior of a point-to-point connection.
+ */
 class ConnectionTest {
 
+    // Verify endpoint lookup returns the device at the other end of the link.
     @Test
     void getOtherDeviceReturnsOppositeEndpoint() {
         EndDevice a = new EndDevice(1, "A");
@@ -17,6 +21,7 @@ class ConnectionTest {
         assertEquals(a, connection.getOtherDevice(b));
     }
 
+    // Verify unrelated devices cannot query a connection they do not belong to.
     @Test
     void getOtherDeviceRejectsUnrelatedDevice() {
         EndDevice a = new EndDevice(1, "A");

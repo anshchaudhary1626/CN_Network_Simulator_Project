@@ -7,8 +7,12 @@ import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
+/**
+ * Validates topology management rules such as unique names and legal connections.
+ */
 class NetworkTest {
 
+    // Verify duplicate device names are rejected.
     @Test
     void addDeviceRejectsDuplicateNames() {
         Network network = new Network();
@@ -23,6 +27,7 @@ class NetworkTest {
         assertEquals("Device with name 'A' already exists", exception.getMessage());
     }
 
+    // Verify blank lookup keys are rejected.
     @Test
     void getDeviceRejectsBlankNames() {
         Network network = new Network();
@@ -35,6 +40,7 @@ class NetworkTest {
         assertEquals("Device name cannot be blank", exception.getMessage());
     }
 
+    // Verify self-connections are rejected.
     @Test
     void connectRejectsSelfConnection() {
         Network network = new Network();
@@ -48,6 +54,7 @@ class NetworkTest {
         assertEquals("A device cannot be connected to itself: A", exception.getMessage());
     }
 
+    // Verify duplicate links between the same two devices are rejected.
     @Test
     void connectRejectsDuplicateConnections() {
         Network network = new Network();
@@ -64,6 +71,7 @@ class NetworkTest {
         assertEquals("Connection already exists", exception.getMessage());
     }
 
+    // Verify a valid link can still be created without exception.
     @Test
     void validConnectionCanBeCreated() {
         Network network = new Network();

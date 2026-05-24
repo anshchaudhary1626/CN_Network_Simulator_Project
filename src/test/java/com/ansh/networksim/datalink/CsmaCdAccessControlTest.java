@@ -12,8 +12,12 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+/**
+ * Locks down the deterministic CSMA/CD demo trace produced by the seeded backoff generator.
+ */
 class CsmaCdAccessControlTest {
 
+    // Verify the deterministic collision trace contains the expected backoff flow.
     @Test
     void simulateSlotHandlesCollisionAcrossBackoffRounds() {
         EndDevice s1 = new EndDevice(1, "S1");

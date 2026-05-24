@@ -12,8 +12,12 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+/**
+ * Covers end-device edge cases such as missing links and ACK reception logging.
+ */
 class EndDeviceTest {
 
+    // Verify a disconnected device cannot send traffic.
     @Test
     void sendWithoutConnectionThrows() {
         EndDevice device = new EndDevice(1, "A");
@@ -26,6 +30,7 @@ class EndDeviceTest {
         assertEquals("A is not connected to any device", exception.getMessage());
     }
 
+    // Verify ACK reception is printed separately from normal frame delivery.
     @Test
     void receiveAckPrintsSequenceNumber() {
         EndDevice device = new EndDevice(1, "A");

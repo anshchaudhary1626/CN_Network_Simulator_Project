@@ -8,8 +8,12 @@ import java.nio.charset.StandardCharsets;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+/**
+ * Confirms that a hub repeats traffic to every other connected port.
+ */
 class HubTest {
 
+    // Verify a hub forwards an incoming packet to all other ports.
     @Test
     void hubBroadcastsPhysicalPacketToOtherConnections() {
         EndDevice d1 = new EndDevice(1, "D1");

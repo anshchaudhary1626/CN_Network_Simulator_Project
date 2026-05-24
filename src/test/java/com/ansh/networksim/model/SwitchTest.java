@@ -9,8 +9,12 @@ import java.nio.charset.StandardCharsets;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+/**
+ * Verifies that switch learning is reflected in the printed MAC table.
+ */
 class SwitchTest {
 
+    // Verify that learned MAC entries are visible when the table is printed.
     @Test
     void switchPrintsLearnedMacTableAfterTraffic() {
         EndDevice s1 = new EndDevice(1, "S1");
